@@ -1,0 +1,390 @@
+@import "tailwindcss";
+@import "./tokens.css";
+
+/* ---------------------------------------------------------------------------
+ * Base
+ * ------------------------------------------------------------------------ */
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+  -webkit-text-size-adjust: 100%;
+  overflow-x: clip;
+}
+
+body {
+  background-color: var(--color-pearl);
+  color: var(--color-narra);
+  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  font-size: var(--text-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+p,
+li,
+dd {
+  overflow-wrap: break-word;
+}
+
+::selection {
+  background-color: var(--color-sun);
+  color: var(--color-narra);
+}
+
+/* Focus rings appear instantly. A transitioned focus ring is a broken focus
+ * ring for anyone moving quickly by keyboard. */
+:focus-visible {
+  outline: 2px solid var(--color-sun-ink);
+  outline-offset: 3px;
+  /* The gold rule carries the contrast; the purple halo only seats it
+   * against the page. Nothing here may be relied on to convey focus. */
+  box-shadow: var(--shadow-halo);
+  transition: none !important;
+}
+
+/* ---------------------------------------------------------------------------
+ * Typography primitives
+ * ------------------------------------------------------------------------ */
+
+.font-display {
+  font-family: var(--font-display), ui-serif, Georgia, serif;
+  font-optical-sizing: auto;
+  letter-spacing: var(--tracking-display);
+  line-height: 0.94;
+  /* Soft terminals, and just enough WONK to be ours rather than default. */
+  font-variation-settings: "SOFT" 28, "WONK" 1;
+}
+
+.font-mono-label {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: var(--text-micro);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+}
+
+.measure {
+  max-width: var(--measure);
+}
+
+.measure-wide {
+  max-width: var(--measure-wide);
+}
+
+/* Small caps.
+ *
+ * The text stays in Title Case; the capitals are drawn at x-height. Applied to
+ * card headings and step labels, where full-height caps shout and sentence
+ * case reads as body copy. `text-transform: none` is load-bearing: it undoes
+ * .font-mono-label's uppercase, which would otherwise leave nothing for
+ * font-variant-caps to act on. */
+.smallcaps {
+  font-variant-caps: small-caps;
+  text-transform: none;
+  letter-spacing: 0.03em;
+}
+
+@media (max-width: 39.999rem) {
+  :root {
+    --text-display: clamp(2.65rem, 14vw, 4rem);
+    --text-title: clamp(1.85rem, 9vw, 2.75rem);
+  }
+}
+
+.prose-enotary {
+  color: var(--color-narra-2);
+  font-size: var(--text-body);
+  line-height: 1.75;
+}
+
+.prose-enotary > * + * {
+  margin-top: 1.25rem;
+}
+
+.prose-enotary h2,
+.prose-enotary h3 {
+  color: var(--color-narra);
+  font-family: var(--font-display), ui-serif, Georgia, serif;
+  font-style: normal;
+  line-height: 1.1;
+  margin-top: 2.75rem;
+}
+
+.prose-enotary h2 {
+  font-size: var(--text-heading);
+}
+
+.prose-enotary h3 {
+  font-size: 1.35rem;
+}
+
+.prose-enotary a {
+  color: var(--color-sun-ink);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.prose-enotary ul,
+.prose-enotary ol {
+  padding-left: 1.5rem;
+}
+
+.prose-enotary ul {
+  list-style: disc;
+}
+
+.prose-enotary ol {
+  list-style: decimal;
+}
+
+/* A pulled quote sits on the thinnest dilution of the anchor, so it reads as
+ * lifted off the pearl without introducing a second surface colour. */
+.prose-enotary blockquote {
+  border-left: 2px solid var(--color-sun);
+  background: var(--color-purple-wash);
+  padding: 1rem 1.25rem;
+}
+
+/* ---------------------------------------------------------------------------
+ * Capiz panel
+ *
+ * The core surface: translucent, square, and held by a fine gold rule.
+ * Light passes through; what is behind stays indistinct.
+ * ------------------------------------------------------------------------ */
+
+.capiz-panel {
+  position: relative;
+  /* The far corner cools into the anchor's veil, so even a lit panel carries
+   * purple rather than sitting on neutral grey. */
+  background: linear-gradient(
+    135deg,
+    color-mix(in oklab, var(--color-pearl) 92%, white) 0%,
+    var(--color-pearl-deep) 44%,
+    color-mix(in oklab, var(--color-pearl-recess) 82%, var(--color-sun-wash)) 76%,
+    color-mix(in oklab, var(--color-purple-veil) 55%, var(--color-pearl-recess)) 100%
+  );
+  border: var(--hairline) solid var(--color-sun);
+  box-shadow: var(--shadow-aura);
+}
+
+/* The shell's inner sheen. Decorative only, so it never affects layout. */
+.capiz-panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    calc(90deg + var(--angle-ray)),
+    transparent 0%,
+    color-mix(in oklab, white 42%, transparent) 34%,
+    transparent 62%
+  );
+  opacity: 0.55;
+}
+
+/* Three steps of the one purple, lightest corner to deepest, so the panel
+ * reads as a solid held at an angle to the light. */
+.capiz-panel--night {
+  background: linear-gradient(
+    135deg,
+    var(--color-night-2) 0%,
+    var(--color-night) 58%,
+    var(--color-night-deep) 100%
+  );
+  border-color: color-mix(in oklab, var(--color-sun) 22%, transparent);
+  box-shadow:
+    var(--shadow-recess),
+    var(--shadow-aura);
+}
+
+.capiz-panel--night::after {
+  opacity: 0.12;
+}
+
+/* A panel that has been lit — the process lantern's active state. The gold
+ * carries the state; the purple halo underneath keeps it on the ground. */
+.capiz-panel--lit {
+  border-color: color-mix(in oklab, var(--color-sun) 62%, transparent);
+  box-shadow:
+    inset 0 0 2.5rem color-mix(in oklab, var(--color-sun) 26%, transparent),
+    0 0 0 1px color-mix(in oklab, var(--color-sun) 18%, transparent),
+    var(--shadow-aura-lift);
+}
+
+/* ---------------------------------------------------------------------------
+ * Mullion rule — a hairline carrying the eight-degree ray angle.
+ * ------------------------------------------------------------------------ */
+
+.mullion-rule {
+  height: var(--hairline);
+  border: 0;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--color-mullion) 12%,
+    var(--color-mullion) 88%,
+    transparent
+  );
+}
+
+/* The same rule drawn in the anchor, for divisions inside purple ground
+ * where a gold hairline would read as an accent rather than as structure. */
+.mullion-rule--purple {
+  background: linear-gradient(
+    to right,
+    transparent,
+    color-mix(in oklab, var(--color-purple) 45%, transparent) 12%,
+    color-mix(in oklab, var(--color-purple) 45%, transparent) 88%,
+    transparent
+  );
+}
+
+/* ---------------------------------------------------------------------------
+ * Bloom
+ *
+ * An off-centre wash of the anchor behind a section. It is a background, not
+ * a shape: no edge of it should ever be locatable. Decorative, so it is
+ * inert to pointers and hidden from assistive technology by virtue of being
+ * a pseudo-element with no content.
+ * ------------------------------------------------------------------------ */
+
+.bloom {
+  position: relative;
+  isolation: isolate;
+}
+
+/* Held to the element's own box. A negative inset would let the wash bleed
+ * onto whatever sits above, which on pearl reads as a smudge rather than as
+ * light. `isolation` on the parent keeps the -1 from escaping upward, and
+ * painting order still puts it above the parent's own background. */
+.bloom::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      52% 44% at 78% 18%,
+      color-mix(in oklab, var(--color-purple) 12%, transparent) 0%,
+      transparent 70%
+    ),
+    radial-gradient(
+      44% 40% at 12% 88%,
+      color-mix(in oklab, var(--color-purple) 9%, transparent) 0%,
+      transparent 72%
+    );
+}
+
+/* On purple ground the bloom inverts: it lifts rather than tints. */
+.bloom--night::before {
+  background:
+    radial-gradient(
+      54% 46% at 74% 14%,
+      color-mix(in oklab, var(--color-night-3) 62%, transparent) 0%,
+      transparent 68%
+    ),
+    radial-gradient(
+      46% 42% at 10% 90%,
+      color-mix(in oklab, var(--color-night-2) 55%, transparent) 0%,
+      transparent 70%
+    );
+}
+
+/* ---------------------------------------------------------------------------
+ * Motion
+ *
+ * The mullion wipe replaces the scroll-triggered fade-up: content is revealed
+ * by a shutter opening, not by sliding into place.
+ * ------------------------------------------------------------------------ */
+
+@keyframes mullion-wipe {
+  from {
+    clip-path: inset(0 0 100% 0);
+    opacity: 0.4;
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+    opacity: 1;
+  }
+}
+
+@keyframes light-gather {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.wipe-in {
+  animation: mullion-wipe var(--duration-wipe) var(--ease-shutter) both;
+}
+
+/* Pre-reveal state.
+ *
+ * Visible by default, and hidden only where scripting can actually run. A
+ * browser with JavaScript disabled therefore renders the full page instead of
+ * a blank one waiting for an effect that will never fire. */
+.reveal-armed {
+  opacity: 1;
+}
+
+@media (scripting: enabled) {
+  .reveal-armed {
+    opacity: 0;
+  }
+}
+
+/* Hover gathers light. Nothing on this site translates on hover. */
+.gather {
+  transition:
+    background-color var(--duration-light) var(--ease-light),
+    border-color var(--duration-light) var(--ease-light),
+    box-shadow var(--duration-light) var(--ease-light),
+    color var(--duration-light) var(--ease-light);
+}
+
+/* A panel that gathers deepens its own aura rather than rising off the page.
+ * Pointer-only: on touch there is no hover state to reward, and the lit
+ * modifier already owns its shadow. */
+@media (hover: hover) {
+  .capiz-panel.gather:hover:not(.capiz-panel--lit) {
+    box-shadow: var(--shadow-aura-lift);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Reduced motion
+ *
+ * Spatial movement is removed; a short opacity change is kept so state
+ * transitions stay perceivable.
+ * ------------------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .wipe-in {
+    animation: light-gather 160ms linear both !important;
+  }
+}

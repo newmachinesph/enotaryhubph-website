@@ -1,0 +1,8 @@
+{
+  "date": "2026-08-04",
+  "framework": "Next.js 16 App Router",
+  "styles": "Tailwind CSS v4 with OKLCH tokens",
+  "fonts": ["Fraunces", "Inter", "JetBrains Mono"],
+  "motion": "custom CSS and OGL; reduced-motion supported",
+  "token_source": "app/tokens.css"
+}

@@ -1,0 +1,137 @@
+/* Hallmark · pre-emit critique: P5 H5 E5 S5 R5 V4
+ * Hallmark · theme: studied palette · tone: ceremonial editorial
+ * Anchor: aubergine #27133c (oklch 23.9% 0.077 303.6) + antique gold
+ * DNA-source: user-attached image · scope: palette only
+ *
+ * Thesis: capiz shell windows. Light passes, identity is protected.
+ * Every token here must be justifiable by that sentence.
+ *
+ * This file is the single source of truth. Page styles never use raw values.
+ */
+
+@theme {
+  /* ---------------------------------------------------------------------
+   * Palette — six core tokens. Restraint is load-bearing.
+   * ------------------------------------------------------------------ */
+
+  /* Capiz shell: the ground the whole site sits on. */
+  --color-pearl: oklch(96.5% 0.018 82);
+  --color-pearl-deep: oklch(92.5% 0.027 80);
+  --color-pearl-recess: oklch(87.5% 0.038 78);
+
+  /* Mullion: the wooden frame. Hairlines and structural rules only. */
+  --color-mullion: oklch(72% 0.105 78);
+  --color-mullion-soft: oklch(86% 0.055 80);
+
+  /* ---------------------------------------------------------------------
+   * Aubergine — the anchor.
+   *
+   * #27133c is the site's one purple. Every purple below is a shade of it:
+   * the hue is pinned to 303.6 and only lightness and chroma move. A second
+   * purple hue is never introduced, so the whole site reads as one dye at
+   * different dilutions rather than as a family of related colours.
+   * ------------------------------------------------------------------ */
+  --color-purple: oklch(23.9% 0.077 303.6); /* #27133c — the anchor */
+
+  /* Ink: the anchor as type on pearl, then two steps up for secondary and
+   * muted prose. Measured on pearl: 15.2:1, 9.3:1, 5.6:1 — all AA. */
+  --color-narra: oklch(23.9% 0.077 303.6); /* #27133c */
+  --color-narra-2: oklch(38% 0.072 303.6); /* #4a3862 */
+  --color-narra-3: oklch(50% 0.064 303.6); /* #6b5a81 */
+
+  /* Veil: the anchor thinned into the light. For panels and rules on pearl
+   * that must read as purple rather than as grey. */
+  --color-purple-veil: oklch(88% 0.032 303.6); /* #dcd3e9 */
+  --color-purple-wash: oklch(94% 0.018 303.6); /* #ede8f5 */
+
+  /* Sun: the flag's eight-ray sun. State and verification ONLY.
+   * --color-sun is a FILL. It fails contrast as text on pearl (~2:1).
+   * Use --color-sun-ink when the accent must carry text weight. */
+  --color-sun: oklch(76% 0.145 82);
+  --color-sun-ink: oklch(47% 0.12 72);
+  --color-sun-wash: oklch(93% 0.06 84);
+
+  /* Night: the anchor as a ground. One step down for recesses the light
+   * never reaches, two up for raised panels and hairlines on the dark.
+   * Vellum on night measures 14.6:1; vellum-2 on night-3, 5.5:1. */
+  --color-night-deep: oklch(13.5% 0.048 303.6); /* #0c0318 */
+  --color-night: oklch(23.9% 0.077 303.6); /* #27133c — the anchor */
+  --color-night-2: oklch(31.5% 0.085 303.6); /* #3b2554 */
+  --color-night-3: oklch(39% 0.08 303.6); /* #4e3968 */
+
+  /* Vellum: the lit translucent sheet in the hero photograph. Used for text
+   * and rules that sit on night, so type on the dark ground shares the
+   * photograph's own light rather than being pure white. */
+  --color-vellum: oklch(95% 0.025 84);
+  --color-vellum-2: oklch(81% 0.038 82);
+
+  /* ---------------------------------------------------------------------
+   * Glow
+   *
+   * Light gathering around a surface, never a drop shadow — nothing here
+   * casts grey. Each value is the anchor at low alpha, written literally so
+   * the glow cannot drift from the purple even if the ramp is re-cut.
+   *
+   * --shadow-aura      resting lift under a panel
+   * --shadow-aura-lift the same on hover, one step further out
+   * --shadow-halo      a hairline plus close bloom, for focus and framing
+   * --shadow-recess    inward glow, for panels lit from within
+   * ------------------------------------------------------------------ */
+  --shadow-aura: 0 1.5rem 4rem -1.75rem oklch(23.9% 0.077 303.6 / 0.5);
+  --shadow-aura-lift: 0 2rem 5rem -1.75rem oklch(23.9% 0.077 303.6 / 0.68);
+  --shadow-halo:
+    0 0 0 1px oklch(23.9% 0.077 303.6 / 0.1),
+    0 0 2.5rem oklch(23.9% 0.077 303.6 / 0.15);
+  --shadow-recess: inset 0 0 4rem oklch(39% 0.08 303.6 / 0.4);
+
+  /* ---------------------------------------------------------------------
+   * Typography
+   * ------------------------------------------------------------------ */
+  --font-display: var(--font-fraunces);
+  --font-body: var(--font-inter);
+  --font-mono: var(--font-jetbrains);
+
+  --text-display: clamp(2.85rem, 8.4vw, 8rem);
+  --text-title: clamp(1.95rem, 4.4vw, 3.6rem);
+  --text-heading: clamp(1.4rem, 2.4vw, 2rem);
+  --text-lead: clamp(1.09rem, 1.5vw, 1.4rem);
+  --text-body: 1.0625rem;
+  --text-small: 0.9375rem;
+  --text-micro: 0.75rem;
+
+  --tracking-display: -0.035em;
+  --tracking-mono: 0.14em;
+
+  /* ---------------------------------------------------------------------
+   * Eight-axis geometry
+   *
+   * The flag's sun has eight rays. Treated here as a grid system, not a
+   * motif: one angle, derived once, reused everywhere.
+   * ------------------------------------------------------------------ */
+  --angle-ray: 8deg;
+  --angle-facet: 45deg; /* 360 / 8 — the capiz facet step */
+  --bevel: 0.75rem; /* octagonal corner cut on capiz panels */
+
+  /* ---------------------------------------------------------------------
+   * Structure
+   * ------------------------------------------------------------------ */
+  --rail-width: 7.5rem; /* the marginalia rail */
+  --hairline: 1px;
+  --measure: 34rem; /* readable line length for legal prose */
+  /* Section intros and lead paragraphs. Wider than --measure, which is cut for
+   * dense legal prose and left section copy stopping well short of the panels
+   * beneath it. Still inside the 45-75 character band. */
+  --measure-wide: 44rem;
+
+  /* ---------------------------------------------------------------------
+   * Motion
+   *
+   * --ease-shutter drives the mullion wipe: fast out, long settle, like a
+   * shutter released. --ease-light is for anything that reads as
+   * illumination rather than movement.
+   * ------------------------------------------------------------------ */
+  --ease-shutter: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-light: cubic-bezier(0.33, 0, 0.16, 1);
+  --duration-wipe: 720ms;
+  --duration-light: 420ms;
+}
